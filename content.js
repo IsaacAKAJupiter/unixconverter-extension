@@ -27,13 +27,19 @@ function getSelectedText() {
 }
 
 document.addEventListener('mouseup', ev => {
+    // Get the base div.
     let baseDiv = document.getElementById('unixconverter-base');
-    if (
-        baseDiv &&
-        ev.target.id !== 'unixconverter-base' &&
-        ev.target.id !== 'unixconverter-date'
-    ) {
-        baseDiv.remove();
+
+    // If the base div exists, do not allow more conversions.
+    if (baseDiv) {
+        // Check if target was not the base or the date and if neither, remove the base div.
+        if (
+            ev.target.id !== 'unixconverter-base' &&
+            ev.target.id !== 'unixconverter-date'
+        ) {
+            baseDiv.remove();
+        }
+
         return;
     }
 
@@ -59,7 +65,7 @@ document.addEventListener('mouseup', ev => {
         // Create the actual timestamp.
         let p = document.createElement('p');
         p.id = 'unixconverter-date';
-        p.innerHTML = date.toString();
+        p.textContent = date.toString();
 
         // Append elements.
         div.appendChild(p);

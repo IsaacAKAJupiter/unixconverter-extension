@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Unix Converter</title>
+        <link rel="stylesheet" href="./popup.css" />
+    </head>
+    <body>
+        <script src="browser-polyfill.min.js"></script>
+        <script src="popup.js"></script>
+        <div class="container">
+            <div class="loading">
+                <h1>Loading...</h1>
+            </div>
+            <div class="content dn">
+                <h1>Unix Converter</h1>
+                <div class="milliseconds">
+                    <span>Milliseconds</span>
+                    <input
+                        type="checkbox"
+                        id="unixconverter-popup-milliseconds"
+                    />
+                </div>
+                <div class="format">
+                    <span>
+                        Format
+                        <a
+                            target="_blank"
+                            href="https://github.com/iamkun/dayjs/blob/dev/docs/en/API-reference.md#format-formatstringwithtokens-string"
+                            >(using dayjs)</a
+                        >
+                    </span>
+                    <input
+                        type="text"
+                        id="unixconverter-popup-format"
+                        placeholder="YYYY-MM-DD"
+                    />
+                </div>
+                <div class="offset">
+                    <span>
+                        Offset
+                    </span>
+                    <input
+                        type="text"
+                        id="unixconverter-popup-offset"
+                        placeholder="-05:00"
+                    />
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

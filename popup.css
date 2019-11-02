@@ -1,0 +1,36 @@
+.dn {
+    display: none;
+}
+
+html {
+    background: linear-gradient(90deg, #fdbb2d 0%, #22c1c3 100%);
+}
+
+html body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.content {
+    margin: 10px;
+}
+
+.milliseconds {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.milliseconds span {
+    align-self: center;
+}
+
+.format,
+.milliseconds {
+    margin-bottom: 10px;
+}
+
+.format,
+.offset {
+    text-align: center;
+}

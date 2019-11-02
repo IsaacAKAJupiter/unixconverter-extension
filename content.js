@@ -26,7 +26,7 @@ function getSelectedText() {
     return '';
 }
 
-document.addEventListener('mouseup', ev => {
+document.addEventListener('mouseup', async ev => {
     // Get the base div.
     let baseDiv = document.getElementById('unixconverter-base');
 
@@ -52,8 +52,47 @@ document.addEventListener('mouseup', ev => {
     if (!text) return;
 
     // Check if you selected regex.
-    if (/^[0-9]{1,}$/.test(text)) {
-        let date = dayjs.unix(text).toDate();
+    if (/^[0-9]{1,}[\.]?[0-9]{1,}$/.test(text)) {
+        // Get the extension settings.
+        let settings = await browser.storage.local.get();
+
+        // Get the date based on the settings.
+        text = parseFloat(text);
+        let date;
+        if (settings.hasOwnProperty('milliseconds') && settings.milliseconds) {
+            date = dayjs(text);
+        } else {
+            date = dayjs.unix(text);
+        }
+
+        // Do math on the date depending on the timezone.
+        if (settings.hasOwnProperty('offset') && settings.offset) {
+            let splitOffset = settings.offset.split(':');
+            date = date
+                .add(date.utcOffset(), 'minute')
+                .add(parseInt(splitOffset[0]), 'hour')
+                .add(parseInt(splitOffset[1]), 'minute');
+        }
+
+        // Get the text content that the p tag is going to be in.
+        let textContent;
+        if (settings.hasOwnProperty('format') && settings.format) {
+            textContent = date.format(settings.format);
+        } else {
+            let format;
+
+            // Check if offset setting is set.
+            if (settings.hasOwnProperty('offset') && settings.offset) {
+                format = `ddd MMM DD YYYY HH:mm:ss [GMT]${settings.offset.replace(
+                    ':',
+                    ''
+                )}`;
+            } else {
+                format = 'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ';
+            }
+
+            textContent = date.format(format);
+        }
 
         // Create an element in the body.
         let div = document.createElement('div');
@@ -65,7 +104,7 @@ document.addEventListener('mouseup', ev => {
         // Create the actual timestamp.
         let p = document.createElement('p');
         p.id = 'unixconverter-date';
-        p.textContent = date.toString();
+        p.textContent = textContent;
 
         // Append elements.
         div.appendChild(p);

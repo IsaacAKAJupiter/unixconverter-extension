@@ -16,21 +16,61 @@ html body {
     margin: 10px;
 }
 
-.milliseconds {
-    display: flex;
-    justify-content: space-evenly;
+.content h1 {
+    text-align: center;
 }
 
-.milliseconds span {
-    align-self: center;
+.fetch-format {
+    display: flex;
+    flex-direction: column;
+}
+
+.radio-inputs {
+    width: 100%;
+    display: flex;
+}
+
+.radio-inputs input {
+    display: none;
+}
+
+.radio-inputs label {
+    width: 100%;
+    background: rgb(63, 70, 66);
+    margin: 4px;
+    padding: 10px;
+    cursor: pointer;
+    color: white;
+}
+
+.radio-inputs input:checked + label {
+    background: rgb(0, 255, 98);
+    color: black;
 }
 
 .format,
-.milliseconds {
+.fetch-format {
     margin-bottom: 10px;
 }
 
 .format,
-.offset {
+.offset,
+.fetch-format span {
     text-align: center;
+}
+
+input[type='text'] {
+    background: none;
+    border-bottom: 1px solid black !important;
+    border: none;
+}
+
+input[type='text']:focus {
+    outline: none !important;
+}
+
+#offset-autocomplete {
+    position: absolute;
+    max-height: 200px;
+    overflow-y: scroll;
 }

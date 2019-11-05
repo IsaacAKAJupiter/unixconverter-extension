@@ -9,6 +9,7 @@
     </head>
     <body>
         <script src="browser-polyfill.min.js"></script>
+        <script src="dayjs.js"></script>
         <script src="popup.js"></script>
         <div class="container">
             <div class="loading">
@@ -16,12 +17,20 @@
             </div>
             <div class="content dn">
                 <h1>Unix Converter</h1>
-                <div class="milliseconds">
-                    <span>Milliseconds</span>
-                    <input
-                        type="checkbox"
-                        id="unixconverter-popup-milliseconds"
-                    />
+                <div class="fetch-format">
+                    <span>Fetch Format</span>
+                    <div class="radio-inputs">
+                        <input type="radio" name="fetchFormat" id="seconds" />
+                        <label for="seconds">Seconds</label>
+                        <input
+                            type="radio"
+                            name="fetchFormat"
+                            id="milliseconds"
+                        />
+                        <label for="milliseconds">Milliseconds</label>
+                        <input type="radio" name="fetchFormat" id="auto" />
+                        <label for="auto">Auto</label>
+                    </div>
                 </div>
                 <div class="format">
                     <span>
@@ -38,15 +47,17 @@
                         placeholder="YYYY-MM-DD"
                     />
                 </div>
+
                 <div class="offset">
                     <span>
-                        Offset
+                        Timezone
                     </span>
                     <input
                         type="text"
                         id="unixconverter-popup-offset"
-                        placeholder="-05:00"
+                        list="timezones"
                     />
+                    <datalist id="timezones"></datalist>
                 </div>
             </div>
         </div>

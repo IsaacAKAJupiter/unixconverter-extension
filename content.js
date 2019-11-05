@@ -26,6 +26,72 @@ function getSelectedText() {
     return '';
 }
 
+async function getFormattedDate(text) {
+    // Get the extension settings.
+    let settings = await browser.storage.local.get();
+
+    // Get the date based on the settings.
+    text = parseFloat(text);
+    let date;
+    let fetchedIn;
+    if (settings.fetchFormat === 'auto') {
+        // TODO: Maybe add a setting to check for microseconds/nanoseconds (for auto ask if they want to include it?)
+        if (`${text}`.length >= 12) {
+            date = dayjs(text);
+            fetchedIn = 'milliseconds';
+        } else {
+            date = dayjs.unix(text);
+            fetchedIn = 'seconds';
+        }
+    } else if (settings.fetchFormat === 'seconds') {
+        date = dayjs.unix(text);
+        fetchedIn = 'seconds';
+    } else if (settings.fetchFormat === 'milliseconds') {
+        date = dayjs(text);
+        fetchedIn = 'milliseconds';
+    }
+
+    // Do math on the date depending on the timezone.
+    if (settings.hasOwnProperty('offset') && settings.offset) {
+        let splitOffset = settings.offset.split(':');
+        date = date
+            .subtract(date.utcOffset(), 'minute')
+            .add(parseInt(splitOffset[0]), 'hour')
+            .add(parseInt(splitOffset[1]), 'minute');
+    }
+
+    // Get the text content that the p tag is going to be in.
+    let textContent;
+    if (settings.hasOwnProperty('format') && settings.format) {
+        textContent = date.format(settings.format);
+    } else {
+        let format;
+
+        // Check if offset setting is set.
+        if (settings.hasOwnProperty('offset') && settings.offset) {
+            format = `ddd MMM DD YYYY HH:mm:ss [GMT]${settings.offset.replace(
+                ':',
+                ''
+            )}`;
+        } else {
+            format = 'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ';
+        }
+
+        textContent = date.format(format);
+    }
+
+    return { textContent, fetchedIn };
+}
+
+// Check if fetchFormat is set and if it is not, set to auto.
+(async () => {
+    let fetchFormat = await browser.storage.local.get('fetchFormat');
+
+    if (!Object.keys(fetchFormat).length) {
+        await browser.storage.local.set({ fetchFormat: 'auto' });
+    }
+})();
+
 document.addEventListener('mouseup', async ev => {
     // Get the base div.
     let baseDiv = document.getElementById('unixconverter-base');
@@ -53,46 +119,8 @@ document.addEventListener('mouseup', async ev => {
 
     // Check if you selected regex.
     if (/^[0-9]{1,}[\.]?[0-9]{1,}$/.test(text)) {
-        // Get the extension settings.
-        let settings = await browser.storage.local.get();
-
-        // Get the date based on the settings.
-        text = parseFloat(text);
-        let date;
-        if (settings.hasOwnProperty('milliseconds') && settings.milliseconds) {
-            date = dayjs(text);
-        } else {
-            date = dayjs.unix(text);
-        }
-
-        // Do math on the date depending on the timezone.
-        if (settings.hasOwnProperty('offset') && settings.offset) {
-            let splitOffset = settings.offset.split(':');
-            date = date
-                .add(date.utcOffset(), 'minute')
-                .add(parseInt(splitOffset[0]), 'hour')
-                .add(parseInt(splitOffset[1]), 'minute');
-        }
-
-        // Get the text content that the p tag is going to be in.
-        let textContent;
-        if (settings.hasOwnProperty('format') && settings.format) {
-            textContent = date.format(settings.format);
-        } else {
-            let format;
-
-            // Check if offset setting is set.
-            if (settings.hasOwnProperty('offset') && settings.offset) {
-                format = `ddd MMM DD YYYY HH:mm:ss [GMT]${settings.offset.replace(
-                    ':',
-                    ''
-                )}`;
-            } else {
-                format = 'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ';
-            }
-
-            textContent = date.format(format);
-        }
+        // Fetch the date.
+        let { textContent, fetchedIn } = await getFormattedDate(text);
 
         // Create an element in the body.
         let div = document.createElement('div');
@@ -106,8 +134,13 @@ document.addEventListener('mouseup', async ev => {
         p.id = 'unixconverter-date';
         p.textContent = textContent;
 
+        let fetchedInP = document.createElement('p');
+        fetchedInP.id = 'unixconverter-fetched-in';
+        fetchedInP.textContent = `This date was fetched using ${fetchedIn}.`;
+
         // Append elements.
         div.appendChild(p);
+        div.appendChild(fetchedInP);
         document.body.appendChild(div);
     }
 });

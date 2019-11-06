@@ -50,8 +50,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Set the input for offset.
     let offsetInput = document.getElementById('unixconverter-popup-offset');
-    // Set the placeholder to your current timezone to make it easier to understand.
-    offsetInput.placeholder = dayjs().format('Z');
     if (
         settings.hasOwnProperty('offset') &&
         settings.offset &&

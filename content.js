@@ -26,16 +26,7 @@ function getSelectedText() {
     return '';
 }
 
-// Check if fetchFormat is set and if it is not, set to auto.
-(async () => {
-    let fetchFormat = await browser.storage.local.get('fetchFormat');
-
-    if (!Object.keys(fetchFormat).length) {
-        await browser.storage.local.set({ fetchFormat: 'auto' });
-    }
-})();
-
-document.addEventListener('mouseup', async ev => {
+async function handleEvent(ev) {
     // Get the base div.
     let baseDiv = document.getElementById('unixconverter-base');
 
@@ -84,4 +75,15 @@ document.addEventListener('mouseup', async ev => {
     div.appendChild(p);
     div.appendChild(fetchedInP);
     document.body.appendChild(div);
-});
+}
+
+// Check if fetchFormat is set and if it is not, set to auto.
+(async () => {
+    let fetchFormat = await browser.storage.local.get('fetchFormat');
+
+    if (!Object.keys(fetchFormat).length) {
+        await browser.storage.local.set({ fetchFormat: 'auto' });
+    }
+})();
+
+document.addEventListener('mouseup', handleEvent, false);

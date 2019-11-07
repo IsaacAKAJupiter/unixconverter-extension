@@ -6,7 +6,12 @@
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
-            "js": ["dayjs.js", "browser-polyfill.min.js", "content.js"],
+            "js": [
+                "dayjs.js",
+                "browser-polyfill.min.js",
+                "content.js",
+                "convert.js"
+            ],
             "css": ["main.css"]
         }
     ],

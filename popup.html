@@ -14,15 +14,22 @@
     <body>
         <script src="browser-polyfill.min.js"></script>
         <script src="dayjs.js"></script>
+        <script src="convert.js"></script>
         <script src="popup.js"></script>
         <div class="container">
             <div class="loading">
-                <h1>Loading...</h1>
+                <h1 class="center">LOADING...</h1>
             </div>
             <div class="content dn">
                 <div class="title center">
-                    <h2>Unix</h2>
-                    <h2>Converter</h2>
+                    <h2>UNIX CONVERTER</h2>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="current-timestamp center">
+                    <h3>Current Timestamp</h3>
+                    <p id="current-unix"></p>
                 </div>
 
                 <div class="divider"></div>
@@ -32,55 +39,158 @@
                     <i class="material-icons">settings_applications</i>
                 </h2>
 
-                <div class="fetch-format">
+                <div class="fetch-format mb10">
                     <span>Fetch Format</span>
                     <div class="radio-inputs">
                         <input type="radio" name="fetchFormat" id="seconds" />
-                        <label class="center" for="seconds">s</label>
+                        <label class="center" for="seconds">seconds</label>
                         <input
                             type="radio"
                             name="fetchFormat"
                             id="milliseconds"
                         />
-                        <label class="center" for="milliseconds">ms</label>
+                        <label class="center" for="milliseconds"
+                            >milliseconds</label
+                        >
+                        <input
+                            type="radio"
+                            name="fetchFormat"
+                            id="microseconds"
+                        />
+                        <label class="center" for="microseconds"
+                            >microseconds</label
+                        >
+                        <input
+                            type="radio"
+                            name="fetchFormat"
+                            id="nanoseconds"
+                        />
+                        <label class="center" for="nanoseconds"
+                            >nanoseconds</label
+                        >
                         <input type="radio" name="fetchFormat" id="auto" />
                         <label class="center" for="auto">auto</label>
                     </div>
                 </div>
-                <div class="format">
-                    <input
-                        type="text"
-                        id="unixconverter-popup-format"
-                        placeholder=" "
-                    />
-                    <span>
-                        Format
-                    </span>
-                    <a
-                        target="_blank"
-                        href="https://github.com/iamkun/dayjs/blob/dev/docs/en/API-reference.md#format-formatstringwithtokens-string"
+
+                <div class="flex no-background">
+                    <i
+                        class="material-icons no-hover"
+                        title="When converting a unix timestamp, this is the format it will be displayed in."
                     >
-                        using dayjs
-                    </a>
+                        help
+                    </i>
+                    <div class="format mb10">
+                        <input
+                            type="text"
+                            id="unixconverter-popup-format"
+                            placeholder=" "
+                        />
+                        <span>
+                            Format
+                        </span>
+                        <a
+                            target="_blank"
+                            href="https://github.com/iamkun/dayjs/blob/dev/docs/en/API-reference.md#format-formatstringwithtokens-string"
+                        >
+                            using dayjs
+                        </a>
+                    </div>
                 </div>
 
-                <div class="offset mb10">
-                    <input
-                        type="text"
-                        id="unixconverter-popup-offset"
-                        list="timezones"
-                        placeholder=" "
-                    />
-                    <span>
-                        Timezone
-                    </span>
-                    <datalist id="timezones"></datalist>
+                <div class="flex no-background">
+                    <i
+                        class="material-icons no-hover"
+                        title="When converting a unix timestamp, this is the timezone it will be shown in."
+                    >
+                        help
+                    </i>
+                    <div class="offset mb10">
+                        <input
+                            type="text"
+                            id="unixconverter-popup-offset"
+                            list="timezones"
+                            placeholder=" "
+                        />
+                        <span>
+                            Timezone
+                        </span>
+                        <datalist id="timezones"></datalist>
+                    </div>
                 </div>
 
-                <h2 class="center icon mb10">
+                <h2 class="center icon">
                     Convert
                     <i class="material-icons ninety">import_export</i>
                 </h2>
+
+                <p class="justify mb10">
+                    The converters below will use your format setting.
+                </p>
+
+                <div class="flex">
+                    <i
+                        class="material-icons no-hover"
+                        title="Converts unix timestamps using your fetch format setting above."
+                    >
+                        help
+                    </i>
+                    <div class="from-unix">
+                        <input
+                            type="text"
+                            id="unixconverter-popup-from-unix"
+                            placeholder=" "
+                        />
+                        <span>
+                            Unix Timestamp
+                        </span>
+                    </div>
+                    <div class="mb10">
+                        <i
+                            id="convert-unix-timestamp"
+                            class="material-icons ninety"
+                        >
+                            import_export
+                        </i>
+                    </div>
+                </div>
+
+                <p
+                    id="convert-unix-timestamp-result"
+                    class="result center dn"
+                ></p>
+
+                <div class="flex">
+                    <i
+                        class="material-icons no-hover"
+                        title="Converts the given input into unix time using the built-in Date.parse() function."
+                    >
+                        help
+                    </i>
+                    <div class="human-readable mb10">
+                        <input
+                            type="text"
+                            id="unixconverter-popup-human-readable"
+                            placeholder=" "
+                        />
+                        <span>
+                            Human Readable
+                        </span>
+                    </div>
+                    <div class="mb10">
+                        <i
+                            id="convert-human-readable"
+                            class="material-icons ninety"
+                        >
+                            import_export
+                        </i>
+                    </div>
+                </div>
+
+                <p
+                    id="convert-human-readable-result"
+                    class="result center dn"
+                ></p>
             </div>
         </div>
     </body>

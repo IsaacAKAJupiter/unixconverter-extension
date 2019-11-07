@@ -10,6 +10,7 @@ html {
     height: 100%;
     height: -webkit-fill-available;
     overflow: hidden;
+    min-width: 195px;
 }
 
 /* Firefox */
@@ -20,14 +21,6 @@ html {
 
     input[type='text'] + span + a {
         transform: translateY(-45px) !important;
-    }
-
-    .title h2:first-child {
-        left: 45px !important;
-    }
-
-    .title h2:last-child {
-        left: 15px !important;
     }
 }
 
@@ -43,34 +36,28 @@ html {
     transform: rotate(90deg);
 }
 
-.title {
-    text-transform: uppercase;
-    height: 60px;
-}
-
 .title h2 {
-    position: absolute;
-    margin: 0;
-}
-
-.title h2:first-child {
-    top: 0px;
-    left: 40px;
     font-size: 50px;
 }
 
-.title h2:last-child {
-    top: 41px;
-    left: 10px;
-    font-size: 29px;
+a,
+a:any-link {
+    text-decoration: underline !important;
 }
 
 a,
 a:any-link,
-input[type='text'] {
-    color: white;
+input[type='text'],
+input[type='text']:not(:placeholder-shown) + span,
+input[type='text']:focus + span {
+    color: white !important;
     text-decoration: none;
     text-shadow: 1px 1px 2px black;
+}
+
+input[type='text']:not(:placeholder-shown) + span,
+input[type='text']:focus + span {
+    color: orange !important;
 }
 
 i {
@@ -79,7 +66,7 @@ i {
     transition: all 250ms ease-in-out;
 }
 
-i:hover {
+i:not(.no-hover):hover {
     transform: rotate(-90deg);
 }
 
@@ -97,6 +84,11 @@ i:hover {
 .content,
 .loading {
     margin: 10px;
+    color: black;
+}
+
+.content {
+    width: max-content;
 }
 
 .center {
@@ -105,14 +97,18 @@ i:hover {
     justify-content: center;
 }
 
+.justify {
+    text-align: justify;
+    text-align-last: center;
+    width: -moz-max-content;
+}
+
 .fetch-format {
     display: flex;
     flex-direction: column;
 }
 
 .radio-inputs {
-    width: 177px;
-    height: 28px;
     display: flex;
 }
 
@@ -139,11 +135,6 @@ i:hover {
     color: black;
 }
 
-.format,
-.fetch-format {
-    margin-bottom: 10px;
-}
-
 .fetch-format span {
     text-align: center;
 }
@@ -157,13 +148,21 @@ input[type='text'] {
 }
 
 .offset input[type='text']:not(:placeholder-shown),
-.offset input[type='text']:focus {
+.offset input[type='text']:focus,
+.human-readable input[type='text']:not(:placeholder-shown),
+.human-readable input[type='text']:focus {
     margin-top: 10px;
 }
 
 .format input[type='text']:not(:placeholder-shown),
-.format input[type='text']:focus {
+.format input[type='text']:focus,
+.from-unix input[type='text']:not(:placeholder-shown),
+.from-unix input[type='text']:focus {
     margin: 10px 0;
+}
+
+input[type='text']:placeholder-shown:not(:focus) + span {
+    color: rgba(0, 0, 0, 0.5) !important;
 }
 
 input[type='text']:placeholder-shown:not(:focus) + span,
@@ -171,16 +170,21 @@ input[type='text']:placeholder-shown:not(:focus) + span + a {
     transform: translateY(0px);
 }
 
+.flex.no-background div span {
+    left: 47px;
+}
+
 input[type='text'] + span,
 input[type='text'] + span + a {
     transform: translateY(-5px);
     position: absolute;
-    left: 15px;
+    left: 42px;
     transition: all 250ms ease-in-out;
 }
 
 input[type='text'] + span {
     z-index: -1;
+    color: black !important;
 }
 
 input[type='text'] + span + a {
@@ -203,4 +207,50 @@ input[type='text']:focus {
     margin: 10px 0;
     background: black;
     height: 1px;
+}
+
+.white-text {
+    color: white;
+    text-decoration: none;
+    text-shadow: 1px 1px 2px black;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex i {
+    margin: 0 5px 0 0 !important;
+}
+
+.flex div:nth-child(2) {
+    width: -webkit-fill-available;
+    width: -moz-available;
+}
+
+.flex.no-background div:last-child {
+    background: none;
+}
+
+.flex div:last-child {
+    background: white;
+    margin-left: 5px;
+    height: 35px;
+}
+
+.flex div:last-child i {
+    font-size: 35px;
+    cursor: pointer;
+    margin: 0 !important;
+}
+
+.result {
+    margin-top: -10px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.current-timestamp * {
+    font-size: 25px;
 }

@@ -13,7 +13,10 @@ async function fixOffset(date) {
 }
 
 async function getFormattedDate(text) {
-    // Check if you selected regex.
+    // Regex out the spaces.
+    text = text.replace(/[ ]/g, '');
+
+    // Check if you selected a number.
     if (!/^[0-9]{1,}([\.]?[0-9]{1,})?$/.test(text)) {
         return { textContent: null, fetchedIn: null };
     }
@@ -21,21 +24,26 @@ async function getFormattedDate(text) {
     // Get the extension settings.
     let settings = await browser.storage.local.get();
 
+    // Replace all non digits/periods then replace all except the last period.
+    text = parseFloat(
+        text.replace(/[^0-9\.]+/g, '').replace(/[.](?=.*[.])/g, '')
+    );
+
     // Get the date based on the settings.
-    text = parseFloat(text);
     let date;
     let fetchedIn;
     switch (settings.fetchFormat) {
         case 'auto':
-            let textString = `${text}`;
+            // Replace the decimal and numbers after it to get proper length.
+            let stringLen = `${text}`.replace(/\.[0-9]*/g, '').length;
 
-            if (textString.length >= 12 && textString.length < 15) {
+            if (stringLen >= 12 && stringLen < 15) {
                 date = dayjs(text);
                 fetchedIn = 'milliseconds';
-            } else if (textString.length >= 15 && textString.length < 17) {
+            } else if (stringLen >= 15 && stringLen < 17) {
                 date = dayjs(text / 1000);
                 fetchedIn = 'microseconds';
-            } else if (textString.length >= 17) {
+            } else if (stringLen >= 17) {
                 date = dayjs(text / 1000000);
                 fetchedIn = 'nanoseconds';
             } else {

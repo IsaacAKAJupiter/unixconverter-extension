@@ -61,6 +61,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         settings.timezone
     ) {
         offsetInput.value = timezone.value;
+    } else if (
+        settings.hasOwnProperty('offset') &&
+        settings.offset &&
+        (!settings.hasOwnProperty('timezone') || !settings.timezone)
+    ) {
+        offsetInput.value = settings.offset;
     }
 
     // Set the input for from-unix.
@@ -73,7 +79,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     );
     humanReadable.value = `${(await fixOffset(dayjs())).format(
         'MMM D, YYYY HH:mm:ss'
-    )}${timezone ? ' ' + timezone.abbr : ''}`;
+    )}${timezone ? ' GMT' + getTimezoneOffset(timezone).replace(':', '') : ''}`;
 
     // Set event listener to only allow numbers for the unix input.
     fromUnix.addEventListener('input', () => {
@@ -137,16 +143,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         let offset;
-        if (timezone) {
-            offset = getTimezoneOffset(timezone);
+        let tz;
+        let newTimezone = timezones.find(
+            timezone => timezone['value'] === offsetInput.value
+        );
+        if (newTimezone) {
+            offset = getTimezoneOffset(newTimezone);
+            tz = newTimezone.value;
         } else if (offsetInput.value.match(/^[+-]?[0-9]{2}:[0-9]{2}$/)) {
             offset = offsetInput.value;
+            tz = null;
         }
 
         if (offset) {
             await browser.storage.local.set({
                 offset,
-                timezone: timezone.value
+                timezone: tz
             });
         }
     });

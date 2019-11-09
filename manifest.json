@@ -24,5 +24,11 @@
         "default_popup": "popup.html",
         "default_title": "Unix Converter"
     },
-    "web_accessible_resources": ["timezones.json"]
+    "web_accessible_resources": ["timezones.json"],
+    "icons": {
+        "16": "images/logo16.png",
+        "48": "images/logo48.png",
+        "96": "images/logo96.png",
+        "128": "images/logo128.png"
+    }
 }

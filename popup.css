@@ -36,6 +36,10 @@ html {
     transform: rotate(90deg);
 }
 
+.w100 {
+    width: 100%;
+}
+
 .title h2 {
     font-size: 50px;
 }
@@ -94,6 +98,9 @@ i:not(.no-hover):hover {
 .center {
     margin: auto;
     text-align: center;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+    text-align: -o-center;
     justify-content: center;
 }
 
@@ -219,6 +226,14 @@ input[type='text']:focus {
     display: flex;
 }
 
+.inline {
+    display: inline;
+}
+
+.help-span {
+    margin: auto 0;
+}
+
 .flex i {
     margin: 0 5px 0 0 !important;
 }
@@ -252,5 +267,68 @@ input[type='text']:focus {
 }
 
 .current-timestamp * {
-    font-size: 25px;
+    font-size: 15px;
+}
+
+/* Custom Switch CSS */
+.switch {
+    background: none !important;
+    margin: 0 !important;
+}
+
+.switch input[type='checkbox'] {
+    opacity: 0;
+    width: 60px;
+    height: 20px;
+    margin: 0;
+    z-index: 99;
+    position: absolute;
+    transform: translate(-30px, 0px);
+    cursor: pointer;
+}
+
+.switch .switch-back {
+    width: 40px;
+    height: 20px;
+    display: block;
+    border-radius: 25px;
+}
+
+.switch input[type='checkbox']:checked + .switch-back {
+    background: black;
+}
+
+.switch input[type='checkbox']:not(:checked) + .switch-back {
+    background: black;
+}
+
+.switch .switch-front {
+    width: 20px;
+    height: 20px;
+    display: block;
+    border-radius: 25px;
+}
+
+.switch input[type='checkbox']:checked + .switch-back + .switch-front {
+    background: orange;
+    border: 1px solid black;
+    transform: translate(10px, -21px);
+    cursor: pointer;
+    -webkit-transition: transform 0.4s;
+    -moz-transition: transform 0.4s;
+    -ms-transition: transform 0.4s;
+    -o-transition: transform 0.4s;
+    transition: transform 0.4s;
+}
+
+.switch input[type='checkbox']:not(:checked) + .switch-back + .switch-front {
+    background: white;
+    border: 1px solid black;
+    transform: translate(-10px, -21px);
+    cursor: pointer;
+    -webkit-transition: transform 0.4s;
+    -moz-transition: transform 0.4s;
+    -ms-transition: transform 0.4s;
+    -o-transition: transform 0.4s;
+    transition: transform 0.4s;
 }

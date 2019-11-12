@@ -3,10 +3,16 @@
     "short_name": "Unix Convert",
     "description": "An easy-to-use all-in-one Unix Epoch timestamp converter.",
     "author": "Isaac Oram",
-    "version": "1.0.1",
-    "version_name": "1.0.1 release",
+    "version": "1.0.2",
     "manifest_version": 2,
-    "permissions": ["storage"],
+    "permissions": [
+        "storage",
+        "contextMenus",
+        "tabs",
+        "clipboardWrite",
+        "http://*/",
+        "https://*/"
+    ],
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
@@ -20,6 +26,14 @@
             "all_frames": true
         }
     ],
+    "background": {
+        "scripts": [
+            "browser-polyfill.min.js",
+            "dayjs.js",
+            "convert.js",
+            "background.js"
+        ]
+    },
     "browser_action": {
         "default_popup": "popup.html",
         "default_title": "Unix Converter"

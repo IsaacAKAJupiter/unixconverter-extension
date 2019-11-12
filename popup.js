@@ -77,9 +77,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     let humanReadable = document.getElementById(
         'unixconverter-popup-human-readable'
     );
-    humanReadable.value = `${(await fixOffset(dayjs())).format(
-        'MMM D, YYYY HH:mm:ss'
-    )}${timezone ? ' GMT' + getTimezoneOffset(timezone).replace(':', '') : ''}`;
+    // Get the first part of the input value.
+    let hrFirst = (await fixOffset(dayjs())).format('MMM D, YYYY HH:mm:ss');
+    // Get the offset if set.
+    let hrSecond = settings.offset ? `GMT${settings.offset}` : '';
+    humanReadable.value = `${hrFirst} ${hrSecond}`;
+
+    // Set the input for contextMenu.
+    let contextMenu = document.getElementById(
+        'unixconverter-popup-contextmenu'
+    );
+    contextMenu.checked = settings.contextMenu;
 
     // Set event listener to only allow numbers for the unix input.
     fromUnix.addEventListener('input', () => {
@@ -161,6 +169,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 timezone: tz
             });
         }
+    });
+
+    // Set the event listener for the contextMenu checkbox.
+    contextMenu.addEventListener('change', async () => {
+        // Update the contextMenu browser storage setting.
+        await browser.storage.local.set({ contextMenu: contextMenu.checked });
     });
 
     // Set the loading to false (add dn to loading, remove dn from content).

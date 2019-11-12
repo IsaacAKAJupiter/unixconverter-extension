@@ -90,6 +90,15 @@ async function handleEvent(ev) {
     div.style.left = `${ev.clientX}px`;
     div.style.top = `${ev.clientY + 30}px`;
 
+    // Copy icon.
+    let icon = document.createElement('i');
+    icon.textContent = 'file_copy';
+    icon.classList.add('material-icons', 'no-hover');
+    icon.id = 'unixconverter-icon';
+
+    // Set event listener for the icon.
+    icon.addEventListener('click', _ => copyToClipboard(textContent));
+
     // Create the actual timestamp.
     let p = document.createElement('p');
     p.id = 'unixconverter-date';
@@ -99,7 +108,17 @@ async function handleEvent(ev) {
     fetchedInP.id = 'unixconverter-fetched-in';
     fetchedInP.textContent = `This date was fetched using ${fetchedIn}.`;
 
+    // The Material Icons font.
+    let font = document.createElement('link');
+    font.setAttribute(
+        'href',
+        'https://fonts.googleapis.com/icon?family=Material+Icons'
+    );
+    font.setAttribute('rel', 'stylesheet');
+
     // Append elements.
+    div.appendChild(font);
+    div.appendChild(icon);
     div.appendChild(p);
     div.appendChild(fetchedInP);
     document.body.appendChild(div);

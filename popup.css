@@ -123,6 +123,10 @@ i:not(.no-hover):hover {
     display: none;
 }
 
+.ml10 {
+    margin-left: 10px;
+}
+
 .radio-inputs label {
     font-size: small;
     width: 100%;
@@ -144,6 +148,10 @@ i:not(.no-hover):hover {
 
 .fetch-format span {
     text-align: center;
+}
+
+.fmtz {
+    display: flex;
 }
 
 input[type='text'] {
@@ -196,12 +204,16 @@ input[type='text'] + span {
 
 input[type='text'] + span + a {
     left: auto;
-    right: 15px;
+    right: 242px;
 }
 
 input[type='text']:focus {
     outline: none !important;
     border-bottom: 1px solid white !important;
+}
+
+.offset span {
+    left: 275px !important;
 }
 
 #offset-autocomplete {

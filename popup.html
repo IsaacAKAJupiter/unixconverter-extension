@@ -92,49 +92,50 @@
                     </div>
                 </div>
 
-                <div class="flex no-background">
-                    <i
-                        class="material-icons no-hover"
-                        title="When converting a unix timestamp, this is the format it will be displayed in."
-                    >
-                        help
-                    </i>
-                    <div class="format mb10">
-                        <input
-                            type="text"
-                            id="unixconverter-popup-format"
-                            placeholder=" "
-                        />
-                        <span>
-                            Format
-                        </span>
-                        <a
-                            target="_blank"
-                            href="https://github.com/iamkun/dayjs/blob/dev/docs/en/API-reference.md#format-formatstringwithtokens-string"
+                <div class="fmtz">
+                    <div class="flex no-background w100">
+                        <i
+                            class="material-icons no-hover"
+                            title="When converting a unix timestamp, this is the format it will be displayed in."
                         >
-                            using dayjs
-                        </a>
+                            help
+                        </i>
+                        <div class="format">
+                            <input
+                                type="text"
+                                id="unixconverter-popup-format"
+                                placeholder=" "
+                            />
+                            <span>
+                                Format
+                            </span>
+                            <a
+                                target="_blank"
+                                href="https://github.com/iamkun/dayjs/blob/dev/docs/en/API-reference.md#format-formatstringwithtokens-string"
+                            >
+                                using dayjs
+                            </a>
+                        </div>
                     </div>
-                </div>
-
-                <div class="flex no-background">
-                    <i
-                        class="material-icons no-hover"
-                        title="When converting a unix timestamp, this is the timezone it will be shown in."
-                    >
-                        help
-                    </i>
-                    <div class="offset mb10">
-                        <input
-                            type="text"
-                            id="unixconverter-popup-offset"
-                            list="timezones"
-                            placeholder=" "
-                        />
-                        <span>
-                            Timezone
-                        </span>
-                        <datalist id="timezones"></datalist>
+                    <div class="flex no-background w100 ml10">
+                        <i
+                            class="material-icons no-hover"
+                            title="When converting a unix timestamp, this is the timezone it will be shown in."
+                        >
+                            help
+                        </i>
+                        <div class="offset">
+                            <input
+                                type="text"
+                                id="unixconverter-popup-offset"
+                                list="timezones"
+                                placeholder=" "
+                            />
+                            <span>
+                                Timezone
+                            </span>
+                            <datalist id="timezones"></datalist>
+                        </div>
                     </div>
                 </div>
 

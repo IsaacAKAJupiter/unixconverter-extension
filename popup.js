@@ -1,10 +1,95 @@
+async function format() {
+    let date = await fixOffset(dayjs());
+    return date.format('MMM DD YYYY HH:mm:ss');
+}
+
+function showActionOverlay(icon, text, time) {
+    let action = document.getElementsByClassName('action')[0];
+
+    // Set the icon textContent.
+    action.children[0].textContent = icon;
+
+    // Set the title textContent.
+    action.children[1].textContent = text;
+
+    // Add shown class to action.
+    action.classList.add('shown');
+
+    setTimeout(() => {
+        action.classList.remove('shown');
+    }, time);
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
+    // Set variables for pausing the current timestamps at the top.
+    let currentUnixPaused = false;
+    let currentUnixMSPaused = false;
+    let currentUnixReadablePaused = false;
+
     // Start the loop for the current unix time at the top.
     let currentUnix = document.getElementById('current-unix');
+    let currentUnixReadable = document.getElementById('current-unix-readable');
     currentUnix.textContent = dayjs().unix();
-    setInterval(() => {
-        currentUnix.textContent = dayjs().unix();
+    currentUnixReadable.textContent = await format();
+    setInterval(async () => {
+        // Set the currentUnix if not paused.
+        if (!currentUnixPaused) {
+            currentUnix.textContent = dayjs().unix();
+        }
+
+        // Set the current unix readable if not paused.
+        if (!currentUnixReadablePaused) {
+            currentUnixReadable.textContent = await format();
+        }
     }, 500);
+
+    // Start the loop for the current unix time (ms) at the top.
+    let currentUnixMS = document.getElementById('current-unix-ms');
+    currentUnixMS.textContent = dayjs().valueOf();
+    setInterval(() => {
+        // Set the currentUnixMS if not paused.
+        if (!currentUnixMSPaused) {
+            currentUnixMS.textContent = dayjs().valueOf();
+        }
+    }, 1);
+
+    // Set event listeners for the current timestamps.
+    // Mouse enter.
+    currentUnix.addEventListener('mouseenter', _ => (currentUnixPaused = true));
+    currentUnixMS.addEventListener(
+        'mouseenter',
+        _ => (currentUnixMSPaused = true)
+    );
+    currentUnixReadable.addEventListener(
+        'mouseenter',
+        _ => (currentUnixReadablePaused = true)
+    );
+    // Mouse leave.
+    currentUnix.addEventListener(
+        'mouseleave',
+        _ => (currentUnixPaused = false)
+    );
+    currentUnixMS.addEventListener(
+        'mouseleave',
+        _ => (currentUnixMSPaused = false)
+    );
+    currentUnixReadable.addEventListener(
+        'mouseleave',
+        _ => (currentUnixReadablePaused = false)
+    );
+    // Click
+    currentUnix.addEventListener('click', _ => {
+        copyToClipboard(currentUnix.textContent);
+        showActionOverlay('checkmark', 'Copied to Clipboard', 1000);
+    });
+    currentUnixMS.addEventListener('click', _ => {
+        copyToClipboard(currentUnixMS.textContent);
+        showActionOverlay('checkmark', 'Copied to Clipboard', 1000);
+    });
+    currentUnixReadable.addEventListener('click', _ => {
+        copyToClipboard(currentUnixReadable.textContent);
+        showActionOverlay('checkmark', 'Copied to Clipboard', 1000);
+    });
 
     // Load the browser storage.
     let settings = await browser.storage.local.get();
@@ -114,19 +199,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     humanReadableButton.addEventListener('click', async () => {
         let date = Date.parse(humanReadable.value) / 1000;
 
-        // Check if there was a timezone in the parsed date and if the user had a timezone setting set.
-        if (
-            !timezones.filter(timezone =>
-                humanReadable.value.includes(timezone.abbr)
-            ).length
-        ) {
-            // date = (await fixOffset(dayjs.unix(date))).unix();
-        }
-
+        // Get the result element.
         let resultElement = document.getElementById(
             'convert-human-readable-result'
         );
 
+        // Check if the date exists and set the result element's textContent.
         if (date) {
             resultElement.classList.remove('dn');
             resultElement.textContent = `Result (seconds): ${date}`;

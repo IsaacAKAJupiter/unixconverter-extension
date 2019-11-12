@@ -104,3 +104,19 @@ function getTimezoneOffset(timezone) {
         return timezone.text.slice(4, 10);
     }
 }
+
+function copyToClipboard(text) {
+    function oncopy(event) {
+        document.removeEventListener('copy', oncopy, true);
+        // Hide the event from the page to prevent tampering.
+        event.stopImmediatePropagation();
+
+        // Overwrite the clipboard content.
+        event.preventDefault();
+        event.clipboardData.setData('text/plain', text);
+    }
+    document.addEventListener('copy', oncopy, true);
+
+    // Execute the copy command.
+    document.execCommand('copy');
+}

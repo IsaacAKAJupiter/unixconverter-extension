@@ -20,6 +20,10 @@
             <div class="loading">
                 <h1 class="center">LOADING...</h1>
             </div>
+            <div class="action">
+                <i class="material-icons no-hover action-icon">checkmark</i>
+                <h1 class="action-title">Copied to Clipboard</h1>
+            </div>
             <div class="content dn">
                 <div class="title center">
                     <h2>UNIX CONVERTER</h2>
@@ -27,9 +31,24 @@
 
                 <div class="divider"></div>
 
-                <div class="current-timestamp center">
-                    <h3>Current Timestamp</h3>
-                    <p id="current-unix"></p>
+                <h3 class="center">Current Timestamp</h3>
+                <p class="center mb10">
+                    Click on any of the timestamps to copy it to your clipboard!
+                </p>
+
+                <div class="current-timestamp">
+                    <div class="center w100">
+                        <h3>Seconds</h3>
+                        <p id="current-unix"></p>
+                    </div>
+                    <div class="center w100">
+                        <h3>Milliseconds</h3>
+                        <p id="current-unix-ms"></p>
+                    </div>
+                    <div class="center w100">
+                        <h3>Human Readable</h3>
+                        <p id="current-unix-readable"></p>
+                    </div>
                 </div>
 
                 <div class="divider"></div>
@@ -119,27 +138,31 @@
                     </div>
                 </div>
 
-                <div class="flex center">
-                    <i
-                        class="material-icons no-hover inline"
-                        title="If enabled, the conversion from a selection will show in the context menu (right click menu)."
-                    >
-                        help
-                    </i>
+                <div class="switches">
+                    <div class="w100">
+                        <div class="flex center">
+                            <i
+                                class="material-icons no-hover inline"
+                                title="If enabled, the conversion from a selection will show in the context menu (right click menu)."
+                            >
+                                help
+                            </i>
 
-                    <span class="center inline help-span">
-                        Context Menu
-                    </span>
-                </div>
+                            <span class="center inline help-span">
+                                Context Menu
+                            </span>
+                        </div>
 
-                <div class="flex center switch-center">
-                    <div class="switch switch-border border-5">
-                        <input
-                            type="checkbox"
-                            id="unixconverter-popup-contextmenu"
-                        />
-                        <span class="switch-back"></span>
-                        <span class="switch-front"></span>
+                        <div class="flex center switch-center">
+                            <div class="switch switch-border border-5">
+                                <input
+                                    type="checkbox"
+                                    id="unixconverter-popup-contextmenu"
+                                />
+                                <span class="switch-back"></span>
+                                <span class="switch-front"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

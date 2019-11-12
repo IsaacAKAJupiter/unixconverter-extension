@@ -44,5 +44,13 @@
         "48": "images/logo48.png",
         "96": "images/logo96.png",
         "128": "images/logo128.png"
+    },
+    "commands": {
+        "cycle-fetch-format": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+Right"
+            },
+            "description": "Cycles the fetch format setting."
+        }
     }
 }

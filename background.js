@@ -25,8 +25,40 @@ async function handleMessage(request, sender, sendResponse) {
     }
 }
 
+async function handleCommand(command) {
+    switch (command) {
+        case 'cycle-fetch-format':
+            // Define the fetch formats.
+            let fetchFormats = [
+                'seconds',
+                'milliseconds',
+                'microseconds',
+                'nanoseconds',
+                'auto'
+            ];
+
+            // Get the current format.
+            let currentFormat = (await browser.storage.local.get('fetchFormat'))
+                .fetchFormat;
+
+            // Get the new index and check if it should be wrapped to 0.
+            let newIndex =
+                fetchFormats.findIndex(format => format === currentFormat) + 1;
+            if (newIndex >= fetchFormats.length) newIndex = 0;
+
+            // Set the new value in the local storage.
+            await browser.storage.local.set({
+                fetchFormat: fetchFormats[newIndex]
+            });
+            break;
+    }
+}
+
 // Add listener to the onMessage event.
 browser.runtime.onMessage.addListener(handleMessage);
+
+// Add listener to commands.
+browser.commands.onCommand.addListener(handleCommand);
 
 // Add listener to the onInstalled event.
 browser.runtime.onInstalled.addListener(createContextMenu);

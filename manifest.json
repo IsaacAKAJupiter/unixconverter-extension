@@ -3,7 +3,7 @@
     "short_name": "Unix Convert",
     "description": "An easy-to-use all-in-one Unix Epoch timestamp converter.",
     "author": "Isaac Oram",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "manifest_version": 2,
     "permissions": [
         "storage",

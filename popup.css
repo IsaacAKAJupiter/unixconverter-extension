@@ -2,25 +2,47 @@
     margin: 0;
     padding: 0;
     font-family: sans-serif;
+    font-size: 12px;
 }
 
 html {
     background: orange;
-    border: 3px solid black;
     height: 100%;
-    height: -webkit-fill-available;
     overflow: hidden;
     min-width: 195px;
 }
 
 /* Firefox */
 @supports (height: -moz-available) {
-    input[type='text']:placeholder-shown:not(:focus) + span + a {
-        transform: translateY(-20px) !important;
+    .content {
+        width: 475px !important;
+    }
+
+    .offset span {
+        left: 288px !important;
     }
 
     input[type='text'] + span + a {
-        transform: translateY(-45px) !important;
+        right: 255px !important;
+    }
+
+    input[type='text']:placeholder-shown:not(:focus) + span + a {
+        transform: translateY(-16px) !important;
+    }
+
+    input[type='text'] + span + a {
+        transform: translateY(-42px) !important;
+    }
+}
+
+/* Chrome */
+@supports not (height: -moz-available) {
+    html {
+        height: -webkit-fill-available;
+    }
+
+    .offset span {
+        left: 290px !important;
     }
 }
 
@@ -40,8 +62,37 @@ html {
     width: 100%;
 }
 
-.title h2 {
-    font-size: 50px;
+.w75 {
+    width: 75%;
+}
+
+.title {
+    margin-bottom: 8px !important;
+}
+
+.title img {
+    background: white;
+    border-radius: 25px;
+    height: 100px;
+    border: 2px solid black;
+}
+
+.content .subtitle {
+    font-size: 15px;
+}
+
+.border {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    border: 3px solid black;
+    z-index: -1;
 }
 
 a,
@@ -85,14 +136,18 @@ i:not(.no-hover):hover {
     font-size: 30px;
 }
 
+.container {
+    width: 500px;
+}
+
+.content {
+    width: 480px;
+}
+
 .content,
 .loading {
     margin: 10px;
     color: black;
-}
-
-.content {
-    width: max-content;
 }
 
 .center {
@@ -107,7 +162,6 @@ i:not(.no-hover):hover {
 .justify {
     text-align: justify;
     text-align-last: center;
-    width: -moz-max-content;
 }
 
 .fetch-format {
@@ -135,6 +189,8 @@ i:not(.no-hover):hover {
     cursor: pointer;
     color: white;
     transition: all 250ms ease-in-out;
+    border-radius: 25px;
+    margin: 3px;
 }
 
 .radio-inputs input:not(:checked):hover + label {
@@ -186,7 +242,7 @@ input[type='text']:placeholder-shown:not(:focus) + span + a {
 }
 
 .flex.no-background div span {
-    left: 47px;
+    left: 44px;
 }
 
 input[type='text'] + span,
@@ -203,17 +259,13 @@ input[type='text'] + span {
 }
 
 input[type='text'] + span + a {
-    left: auto;
-    right: 242px;
+    left: unset;
+    right: 259px;
 }
 
 input[type='text']:focus {
     outline: none !important;
     border-bottom: 1px solid white !important;
-}
-
-.offset span {
-    left: 275px !important;
 }
 
 #offset-autocomplete {
@@ -275,19 +327,12 @@ input[type='text']:focus {
     margin-top: -10px;
     margin-bottom: 15px;
     font-weight: bold;
-    font-size: 1.1em;
+    max-width: 400px;
+    overflow: hidden;
 }
 
 .current-timestamp {
     display: flex;
-}
-
-.current-timestamp * {
-    font-size: 15px;
-}
-
-.current-timestamp div h3 {
-    text-shadow: 1px 1px 5px white;
 }
 
 .current-timestamp div p:hover {
@@ -368,6 +413,7 @@ input[type='text']:focus {
     left: 50%;
     transform: translate(-50%, -50%);
     background: rgba(255, 153, 0, 0.85);
+    color: black;
     width: 100%;
     height: 100%;
     display: flex;
@@ -397,4 +443,5 @@ input[type='text']:focus {
     text-align: center;
     text-transform: uppercase;
     transition: all 1s ease-in-out;
+    font-size: 30px;
 }

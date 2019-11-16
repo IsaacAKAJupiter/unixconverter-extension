@@ -7,13 +7,16 @@
 
 html {
     background: orange;
-    height: 100%;
     overflow: hidden;
     min-width: 195px;
 }
 
 /* Firefox */
 @supports (height: -moz-available) {
+    html {
+        height: 100%;
+    }
+
     .content {
         width: 475px !important;
     }
@@ -37,10 +40,6 @@ html {
 
 /* Chrome */
 @supports not (height: -moz-available) {
-    html {
-        height: -webkit-fill-available;
-    }
-
     .offset span {
         left: 290px !important;
     }
@@ -476,10 +475,18 @@ input[type='text']:focus {
     margin-left: 20px;
 }
 
-.tab-convert {
+.tab-convert,
+.tab-elapsed {
     position: absolute;
-    left: 190px;
     top: 235px;
+}
+
+.tab-convert {
+    left: 190px;
+}
+
+.tab-elapsed {
+    left: 350px;
 }
 
 input[type='radio'][name='tabs'] {
@@ -509,6 +516,7 @@ input[type='radio'][name='tabs']:not(:checked) + .tab .tab-title {
     border-bottom: 1px solid black;
 }
 
-input[type='radio'][name='tabs']:checked + .tab .tab-convert {
+input[type='radio'][name='tabs']:checked + .tab .tab-convert,
+input[type='radio'][name='tabs']:checked + .tab .tab-elapsed {
     top: 230px;
 }

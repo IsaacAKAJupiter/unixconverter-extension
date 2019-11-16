@@ -59,192 +59,223 @@
 
                 <div class="divider"></div>
 
-                <h2 class="center icon mb10">
-                    Settings
-                    <i class="material-icons">settings_applications</i>
-                </h2>
-
-                <div class="fetch-format mb10">
-                    <span>Fetch Format</span>
-                    <div class="radio-inputs">
-                        <input type="radio" name="fetchFormat" id="seconds" />
-                        <label class="center" for="seconds">seconds</label>
-                        <input
-                            type="radio"
-                            name="fetchFormat"
-                            id="milliseconds"
-                        />
-                        <label class="center" for="milliseconds"
-                            >milliseconds</label
+                <!-- Tabs -->
+                <div class="tabs mt20">
+                    <input type="radio" name="tabs" id="settings" checked />
+                    <div class="tab">
+                        <label
+                            class="tab-title tab-settings center"
+                            for="settings"
                         >
-                        <input
-                            type="radio"
-                            name="fetchFormat"
-                            id="microseconds"
-                        />
-                        <label class="center" for="microseconds"
-                            >microseconds</label
-                        >
-                        <input
-                            type="radio"
-                            name="fetchFormat"
-                            id="nanoseconds"
-                        />
-                        <label class="center" for="nanoseconds"
-                            >nanoseconds</label
-                        >
-                        <input type="radio" name="fetchFormat" id="auto" />
-                        <label class="center" for="auto">auto</label>
-                    </div>
-                </div>
+                            Settings
+                        </label>
 
-                <div class="fmtz">
-                    <div class="flex no-background w100">
-                        <i
-                            class="material-icons no-hover"
-                            title="When converting a unix timestamp, this is the format it will be displayed in."
-                        >
-                            help
-                        </i>
-                        <div class="format">
-                            <input
-                                type="text"
-                                id="unixconverter-popup-format"
-                                placeholder=" "
-                            />
-                            <span>
-                                Format
-                            </span>
-                            <a
-                                target="_blank"
-                                href="https://github.com/iamkun/dayjs/blob/dev/docs/en/API-reference.md#format-formatstringwithtokens-string"
-                            >
-                                using dayjs
-                            </a>
-                        </div>
-                    </div>
-                    <div class="flex no-background w100 ml10">
-                        <i
-                            class="material-icons no-hover"
-                            title="When converting a unix timestamp, this is the timezone it will be shown in."
-                        >
-                            help
-                        </i>
-                        <div class="offset">
-                            <input
-                                type="text"
-                                id="unixconverter-popup-offset"
-                                list="timezones"
-                                placeholder=" "
-                            />
-                            <span>
-                                Timezone
-                            </span>
-                            <datalist id="timezones"></datalist>
-                        </div>
-                    </div>
-                </div>
+                        <div class="tab-body">
+                            <div class="fetch-format mb10 mt20">
+                                <span>Fetch Format</span>
+                                <div class="radio-inputs">
+                                    <input
+                                        type="radio"
+                                        name="fetchFormat"
+                                        id="seconds"
+                                    />
+                                    <label class="center" for="seconds">
+                                        seconds
+                                    </label>
+                                    <input
+                                        type="radio"
+                                        name="fetchFormat"
+                                        id="milliseconds"
+                                    />
+                                    <label class="center" for="milliseconds">
+                                        milliseconds
+                                    </label>
+                                    <input
+                                        type="radio"
+                                        name="fetchFormat"
+                                        id="microseconds"
+                                    />
+                                    <label class="center" for="microseconds">
+                                        microseconds
+                                    </label>
+                                    <input
+                                        type="radio"
+                                        name="fetchFormat"
+                                        id="nanoseconds"
+                                    />
+                                    <label class="center" for="nanoseconds">
+                                        nanoseconds
+                                    </label>
+                                    <input
+                                        type="radio"
+                                        name="fetchFormat"
+                                        id="auto"
+                                    />
+                                    <label class="center" for="auto"
+                                        >auto</label
+                                    >
+                                </div>
+                            </div>
 
-                <div class="switches">
-                    <div class="w100">
-                        <div class="flex center">
-                            <i
-                                class="material-icons no-hover inline"
-                                title="If enabled, the conversion from a selection will show in the context menu (right click menu)."
-                            >
-                                help
-                            </i>
+                            <div class="fmtz">
+                                <div class="flex no-background w100">
+                                    <i
+                                        class="material-icons no-hover"
+                                        title="When converting a unix timestamp, this is the format it will be displayed in."
+                                    >
+                                        help
+                                    </i>
+                                    <div class="format">
+                                        <input
+                                            type="text"
+                                            id="unixconverter-popup-format"
+                                            placeholder=" "
+                                        />
+                                        <span>
+                                            Format
+                                        </span>
+                                        <a
+                                            target="_blank"
+                                            href="https://github.com/iamkun/dayjs/blob/dev/docs/en/API-reference.md#format-formatstringwithtokens-string"
+                                        >
+                                            using dayjs
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="flex no-background w100 ml10">
+                                    <i
+                                        class="material-icons no-hover"
+                                        title="When converting a unix timestamp, this is the timezone it will be shown in."
+                                    >
+                                        help
+                                    </i>
+                                    <div class="offset">
+                                        <input
+                                            type="text"
+                                            id="unixconverter-popup-offset"
+                                            list="timezones"
+                                            placeholder=" "
+                                        />
+                                        <span>
+                                            Timezone
+                                        </span>
+                                        <datalist id="timezones"></datalist>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <span class="center inline help-span">
-                                Context Menu
-                            </span>
-                        </div>
+                            <div class="switches">
+                                <div class="w100">
+                                    <div class="flex center">
+                                        <i
+                                            class="material-icons no-hover inline"
+                                            title="If enabled, the conversion from a selection will show in the context menu (right click menu)."
+                                        >
+                                            help
+                                        </i>
 
-                        <div class="flex center switch-center">
-                            <div class="switch switch-border border-5">
-                                <input
-                                    type="checkbox"
-                                    id="unixconverter-popup-contextmenu"
-                                />
-                                <span class="switch-back"></span>
-                                <span class="switch-front"></span>
+                                        <span class="center inline help-span">
+                                            Context Menu
+                                        </span>
+                                    </div>
+
+                                    <div class="flex center switch-center">
+                                        <div
+                                            class="switch switch-border border-5"
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                id="unixconverter-popup-contextmenu"
+                                            />
+                                            <span class="switch-back"></span>
+                                            <span class="switch-front"></span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <h2 class="center icon">
-                    Convert
-                    <i class="material-icons ninety">import_export</i>
-                </h2>
-
-                <p class="justify mb10 w100">
-                    The converters below will use your format setting.
-                </p>
-
-                <div class="flex">
-                    <i
-                        class="material-icons no-hover"
-                        title="Converts unix timestamps using your fetch format setting above."
-                    >
-                        help
-                    </i>
-                    <div class="from-unix">
-                        <input
-                            type="text"
-                            id="unixconverter-popup-from-unix"
-                            placeholder=" "
-                        />
-                        <span>
-                            Unix Timestamp
-                        </span>
-                    </div>
-                    <div class="mb10">
-                        <i
-                            id="convert-unix-timestamp"
-                            class="material-icons ninety"
+                    <input type="radio" name="tabs" id="unix-convert" />
+                    <div class="tab">
+                        <label
+                            class="tab-title tab-convert center"
+                            for="unix-convert"
                         >
-                            import_export
-                        </i>
+                            Convert
+                        </label>
+
+                        <div class="tab-body">
+                            <p class="justify mb10 w100 mt20">
+                                The converters below will use your format
+                                setting.
+                            </p>
+
+                            <div class="flex">
+                                <i
+                                    class="material-icons no-hover"
+                                    title="Converts unix timestamps using your fetch format setting above."
+                                >
+                                    help
+                                </i>
+                                <div class="from-unix">
+                                    <input
+                                        type="text"
+                                        id="unixconverter-popup-from-unix"
+                                        placeholder=" "
+                                    />
+                                    <span>
+                                        Unix Timestamp
+                                    </span>
+                                </div>
+                                <div class="mb10">
+                                    <i
+                                        id="convert-unix-timestamp"
+                                        class="material-icons ninety"
+                                    >
+                                        import_export
+                                    </i>
+                                </div>
+                            </div>
+
+                            <p
+                                id="convert-unix-timestamp-result"
+                                class="result center dn"
+                            ></p>
+
+                            <div class="flex">
+                                <i
+                                    class="material-icons no-hover"
+                                    title="Converts the given input into unix time using the built-in Date.parse() function."
+                                >
+                                    help
+                                </i>
+                                <div class="human-readable mb10">
+                                    <input
+                                        type="text"
+                                        id="unixconverter-popup-human-readable"
+                                        placeholder=" "
+                                    />
+                                    <span>
+                                        Human Readable
+                                    </span>
+                                </div>
+                                <div class="mb10">
+                                    <i
+                                        id="convert-human-readable"
+                                        class="material-icons ninety"
+                                    >
+                                        import_export
+                                    </i>
+                                </div>
+                            </div>
+
+                            <p
+                                id="convert-human-readable-result"
+                                class="result center dn"
+                            ></p>
+                        </div>
                     </div>
                 </div>
-
-                <p
-                    id="convert-unix-timestamp-result"
-                    class="result center dn"
-                ></p>
-
-                <div class="flex">
-                    <i
-                        class="material-icons no-hover"
-                        title="Converts the given input into unix time using the built-in Date.parse() function."
-                    >
-                        help
-                    </i>
-                    <div class="human-readable mb10">
-                        <input
-                            type="text"
-                            id="unixconverter-popup-human-readable"
-                            placeholder=" "
-                        />
-                        <span>
-                            Human Readable
-                        </span>
-                    </div>
-                    <div class="mb10">
-                        <i
-                            id="convert-human-readable"
-                            class="material-icons ninety"
-                        >
-                            import_export
-                        </i>
-                    </div>
-                </div>
-
-                <p
-                    id="convert-human-readable-result"
-                    class="result center dn"
-                ></p>
             </div>
         </div>
     </body>

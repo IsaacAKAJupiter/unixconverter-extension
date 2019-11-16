@@ -54,6 +54,10 @@ html {
     margin-bottom: 10px !important;
 }
 
+.mt20 {
+    margin-top: 20px !important;
+}
+
 .ninety {
     transform: rotate(90deg);
 }
@@ -350,7 +354,7 @@ input[type='text']:focus {
 }
 
 .switch input[type='checkbox'] {
-    opacity: 0;
+    opacity: 0 !important;
     width: 60px;
     height: 20px;
     margin: 0;
@@ -444,4 +448,67 @@ input[type='text']:focus {
     text-transform: uppercase;
     transition: all 1s ease-in-out;
     font-size: 30px;
+}
+
+/* Tabs CSS */
+@keyframes opacity {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.tab-title {
+    cursor: pointer;
+    font-size: 25px;
+    text-transform: uppercase;
+    transition: all 0.5s ease-in-out;
+    opacity: 1 !important;
+}
+
+.tab-body {
+    transition: opacity 0.5s ease-in-out;
+}
+
+.tab-settings {
+    margin-left: 20px;
+}
+
+.tab-convert {
+    position: absolute;
+    left: 190px;
+    top: 235px;
+}
+
+input[type='radio'][name='tabs'] {
+    display: none;
+}
+
+input[type='radio'][name='tabs']:not(:checked) + .tab .tab-body {
+    display: none;
+    opacity: 0;
+}
+
+input[type='radio'][name='tabs']:checked + .tab .tab-body {
+    animation: opacity 0.5s ease-in-out;
+}
+
+input[type='radio'][name='tabs']:checked + .tab {
+    opacity: 1;
+}
+
+input[type='radio'][name='tabs']:checked + .tab .tab-title {
+    border-bottom: 2px solid black;
+    background: white;
+    padding: 5px;
+}
+
+input[type='radio'][name='tabs']:not(:checked) + .tab .tab-title {
+    border-bottom: 1px solid black;
+}
+
+input[type='radio'][name='tabs']:checked + .tab .tab-convert {
+    top: 230px;
 }

@@ -224,7 +224,9 @@ input[type='text'] {
 .offset input[type='text']:not(:placeholder-shown),
 .offset input[type='text']:focus,
 .human-readable input[type='text']:not(:placeholder-shown),
-.human-readable input[type='text']:focus {
+.human-readable input[type='text']:focus,
+.custom-elapsed-since .fmtz div div input[type='text']:not(:placeholder-shown),
+.custom-elapsed-since .fmtz div div input[type='text']:focus {
     margin-top: 10px;
 }
 
@@ -242,6 +244,18 @@ input[type='text']:placeholder-shown:not(:focus) + span {
 input[type='text']:placeholder-shown:not(:focus) + span,
 input[type='text']:placeholder-shown:not(:focus) + span + a {
     transform: translateY(0px);
+}
+
+.elapsed-year span {
+    left: 15px !important;
+}
+
+.elapsed-month span {
+    left: 178px !important;
+}
+
+.elapsed-day span {
+    left: 341px !important;
 }
 
 .flex.no-background div span {
@@ -375,7 +389,11 @@ input[type='text']:focus {
 }
 
 .switch input[type='checkbox']:not(:checked) + .switch-back {
-    background: black;
+    background: transparent;
+    border: 1px solid black;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 .switch .switch-front {
@@ -390,22 +408,14 @@ input[type='text']:focus {
     border: 1px solid black;
     transform: translate(10px, -21px);
     cursor: pointer;
-    -webkit-transition: transform 0.4s;
-    -moz-transition: transform 0.4s;
-    -ms-transition: transform 0.4s;
-    -o-transition: transform 0.4s;
     transition: transform 0.4s;
 }
 
 .switch input[type='checkbox']:not(:checked) + .switch-back + .switch-front {
-    background: white;
+    background: orange;
     border: 1px solid black;
     transform: translate(-10px, -21px);
     cursor: pointer;
-    -webkit-transition: transform 0.4s;
-    -moz-transition: transform 0.4s;
-    -ms-transition: transform 0.4s;
-    -o-transition: transform 0.4s;
     transition: transform 0.4s;
 }
 

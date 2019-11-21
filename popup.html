@@ -37,7 +37,7 @@
                     >
                         help
                     </i>
-                    Unix Timestamp
+                    &nbsp;Unix Timestamp
                 </h2>
 
                 <div class="divider"></div>
@@ -219,6 +219,7 @@
                                 </i>
                                 <div class="from-unix">
                                     <input
+                                        onlyNumber
                                         type="text"
                                         id="unixconverter-popup-from-unix"
                                         placeholder=" "
@@ -286,9 +287,75 @@
 
                         <div class="tab-body">
                             <div class="mt20">
-                                <p>this is a test</p>
+                                <p class="justify mb10 w100 mt20">
+                                    The below date is what the timers will use
+                                    to show the elapsed time.
+                                </p>
+                                <div class="custom-elapsed-since">
+                                    <div class="fmtz">
+                                        <div class="flex no-background w100">
+                                            <div class="elapsed-year">
+                                                <input
+                                                    onlyNumber
+                                                    type="text"
+                                                    id="unixconverter-popup-elapsed-year"
+                                                    placeholder=" "
+                                                />
+                                                <span>
+                                                    Year
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex no-background w100 ml10"
+                                        >
+                                            <div class="elapsed-month">
+                                                <input
+                                                    onlyNumber
+                                                    type="text"
+                                                    id="unixconverter-popup-elapsed-month"
+                                                    placeholder=" "
+                                                />
+                                                <span>
+                                                    Month
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex no-background w100 ml10"
+                                        >
+                                            <div class="elapsed-day">
+                                                <input
+                                                    onlyNumber
+                                                    type="text"
+                                                    id="unixconverter-popup-elapsed-day"
+                                                    placeholder=" "
+                                                />
+                                                <span>
+                                                    Day
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="justify mb10 w100">
+                                    Timestamps since above date.
+                                </p>
+                                <div class="current-timestamp">
+                                    <div class="center w100">
+                                        <h3>Seconds</h3>
+                                        <p id="current-elapsed">2312521312</p>
+                                    </div>
+                                    <div class="center w100">
+                                        <h3>Milliseconds</h3>
+                                        <p id="current-elapsed-ms">
+                                            2413421521421521
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>

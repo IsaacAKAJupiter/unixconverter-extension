@@ -26,7 +26,7 @@ async function getFormattedDate(text) {
 
     // Replace all non digits/periods then replace all except the last period.
     text = parseFloat(
-        text.replace(/[^0-9\.]+/g, '').replace(/[.](?=.*[.])/g, '')
+        text.replace(/[^0-9\.]+/g, '').replace(/(?<=.*[.])[.]/g, '')
     );
 
     // Get the date based on the settings.
@@ -119,4 +119,41 @@ function copyToClipboard(text) {
 
     // Execute the copy command.
     document.execCommand('copy');
+}
+
+async function loadDefaultSettings() {
+    // Check if fetchFormat is set and if it is not, set to auto.
+    let fetchFormat = await browser.storage.local.get('fetchFormat');
+
+    if (!Object.keys(fetchFormat).length) {
+        await browser.storage.local.set({ fetchFormat: 'auto' });
+    }
+
+    // Check if contextMenu is set and if it is not, set to false.
+    let contextMenu = await browser.storage.local.get('contextMenu');
+
+    if (!Object.keys(contextMenu).length) {
+        await browser.storage.local.set({ contextMenu: false });
+    }
+
+    // Check if elapsedYear is set and if it is not, set to 1.
+    let elapsedYear = await browser.storage.local.get('elapsedYear');
+
+    if (!Object.keys(elapsedYear).length) {
+        await browser.storage.local.set({ elapsedYear: 1 });
+    }
+
+    // Check if elapsedMonth is set and if it is not, set to 1.
+    let elapsedMonth = await browser.storage.local.get('elapsedMonth');
+
+    if (!Object.keys(elapsedMonth).length) {
+        await browser.storage.local.set({ elapsedMonth: 1 });
+    }
+
+    // Check if elapsedDay is set and if it is not, set to 1.
+    let elapsedDay = await browser.storage.local.get('elapsedDay');
+
+    if (!Object.keys(elapsedDay).length) {
+        await browser.storage.local.set({ elapsedDay: 1 });
+    }
 }

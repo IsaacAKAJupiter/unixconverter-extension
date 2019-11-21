@@ -1,4 +1,7 @@
 async function createContextMenu() {
+    // Set default settings.
+    loadDefaultSettings();
+
     await browser.contextMenus.removeAll();
     await browser.contextMenus.create({
         id: 'unixconverter-context',

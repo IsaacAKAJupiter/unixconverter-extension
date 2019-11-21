@@ -124,21 +124,8 @@ async function handleEvent(ev) {
     document.body.appendChild(div);
 }
 
-// Make an async function that calls itself immediately as the content script loads.
-(async () => {
-    // Check if fetchFormat is set and if it is not, set to auto.
-    let fetchFormat = await browser.storage.local.get('fetchFormat');
-
-    if (!Object.keys(fetchFormat).length) {
-        await browser.storage.local.set({ fetchFormat: 'auto' });
-    }
-
-    // Check if contextMenu is set and if it is not, set to false.
-    let contextMenu = await browser.storage.local.get('contextMenu');
-
-    if (!Object.keys(contextMenu).length) {
-        await browser.storage.local.set({ contextMenu: false });
-    }
+(() => {
+    loadDefaultSettings();
 
     // Add an event listener on mouseup to handle the CTRL click conversion.
     document.addEventListener('mouseup', handleEvent, false);

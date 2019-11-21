@@ -3,6 +3,16 @@ async function format() {
     return date.format('MMM DD YYYY HH:mm:ss');
 }
 
+async function getElapsed() {
+    let settings = await browser.storage.local.get();
+    let date = dayjs().startOf('year');
+    date = date
+        .year(settings.elapsedYear)
+        .month(settings.elapsedMonth - 1)
+        .date(settings.elapsedDay);
+    return dayjs().diff(date);
+}
+
 function showActionOverlay(icon, text, time) {
     let action = document.getElementsByClassName('action')[0];
 
@@ -21,10 +31,36 @@ function showActionOverlay(icon, text, time) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+    loadDefaultSettings();
+
+    // Make all onlyNumber inputs only allow inputting numbers.
+    let numberInputs = document.querySelectorAll('input[onlyNumber]');
+    for (let i = 0; i < numberInputs.length; i++) {
+        // Set event listener to only allow numbers for the unix input.
+        numberInputs[i].addEventListener('input', () => {
+            numberInputs[i].value = numberInputs[i].value.replace(
+                /[^0-9-]/g,
+                ''
+            );
+        });
+    }
+
+    // Load the browser storage.
+    let settings = await browser.storage.local.get();
+
+    // Get all the timezones.
+    let timezones = await (
+        await fetch(await browser.runtime.getURL('timezones.json'))
+    ).json();
+
     // Set variables for pausing the current timestamps at the top.
     let currentUnixPaused = false;
     let currentUnixMSPaused = false;
     let currentUnixReadablePaused = false;
+
+    // Set variables for pausing the elapsed timestamps (third tab).
+    let elapsedPaused = false;
+    let elapsedMSPaused = false;
 
     // Start the loop for the current unix time at the top.
     let currentUnix = document.getElementById('current-unix');
@@ -50,6 +86,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Set the currentUnixMS if not paused.
         if (!currentUnixMSPaused) {
             currentUnixMS.textContent = dayjs().valueOf();
+        }
+    }, 1);
+
+    // Start the loop for the elapsed time (third tab).
+    let currentElapsed = document.getElementById('current-elapsed');
+    currentElapsed.textContent = Math.round((await getElapsed()) / 1000);
+    setInterval(async () => {
+        // Set the currentElapsed if not paused.
+        if (!elapsedPaused) {
+            currentElapsed.textContent = Math.round(
+                (await getElapsed()) / 1000
+            );
+        }
+    }, 500);
+
+    // Start the loop for the current unix time (ms) at the top.
+    let currentElapsedMS = document.getElementById('current-elapsed-ms');
+    currentElapsedMS.textContent = await getElapsed();
+    setInterval(async () => {
+        // Set the currentElapsedMS if not paused.
+        if (!elapsedMSPaused) {
+            currentElapsedMS.textContent = await getElapsed();
         }
     }, 1);
 
@@ -91,13 +149,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         showActionOverlay('checkmark', 'Copied to Clipboard', 1000);
     });
 
-    // Load the browser storage.
-    let settings = await browser.storage.local.get();
-
-    // Get all the timezones.
-    let timezones = await (await fetch(
-        await browser.runtime.getURL('timezones.json')
-    )).json();
+    // Set event listeners for the elapsed time (third tab).
+    // Mouse enter.
+    currentElapsed.addEventListener('mouseenter', _ => (elapsedPaused = true));
+    currentElapsedMS.addEventListener(
+        'mouseenter',
+        _ => (elapsedMSPaused = true)
+    );
+    // Mouse leave.
+    currentElapsed.addEventListener('mouseleave', _ => (elapsedPaused = false));
+    currentElapsedMS.addEventListener(
+        'mouseleave',
+        _ => (elapsedMSPaused = false)
+    );
+    // Click
+    currentElapsed.addEventListener('click', _ => {
+        copyToClipboard(currentElapsed.textContent);
+        showActionOverlay('checkmark', 'Copied to Clipboard', 1000);
+    });
+    currentElapsedMS.addEventListener('click', _ => {
+        copyToClipboard(currentElapsedMS.textContent);
+        showActionOverlay('checkmark', 'Copied to Clipboard', 1000);
+    });
 
     // Get the timezone from storage.
     let timezone = timezones.find(
@@ -168,16 +241,53 @@ document.addEventListener('DOMContentLoaded', async () => {
     let hrSecond = settings.offset ? `GMT${settings.offset}` : '';
     humanReadable.value = `${hrFirst} ${hrSecond}`;
 
+    // Set the input for elapsedYear and also set event listeners for it.
+    let elapsedYear = document.getElementById(
+        'unixconverter-popup-elapsed-year'
+    );
+    if (settings.hasOwnProperty('elapsedYear') && settings.elapsedYear) {
+        elapsedYear.value = settings.elapsedYear;
+    }
+    elapsedYear.addEventListener('input', async () => {
+        if (elapsedYear.value.match(/^-?[0-9]+$/)) {
+            // Set the value in browser local storage.
+            await browser.storage.local.set({ elapsedYear: elapsedYear.value });
+        }
+    });
+
+    // Set the input for elapsedMonth and also set event listeners for it.
+    let elapsedMonth = document.getElementById(
+        'unixconverter-popup-elapsed-month'
+    );
+    if (settings.hasOwnProperty('elapsedMonth') && settings.elapsedMonth) {
+        elapsedMonth.value = settings.elapsedMonth;
+    }
+    elapsedMonth.addEventListener('input', async () => {
+        if (elapsedMonth.value.match(/^-?[0-9]+$/)) {
+            // Set the value in browser local storage.
+            await browser.storage.local.set({
+                elapsedMonth: elapsedMonth.value
+            });
+        }
+    });
+
+    // Set the input for elapsedDay.
+    let elapsedDay = document.getElementById('unixconverter-popup-elapsed-day');
+    if (settings.hasOwnProperty('elapsedDay') && settings.elapsedDay) {
+        elapsedDay.value = settings.elapsedDay;
+    }
+    elapsedDay.addEventListener('input', async () => {
+        if (elapsedDay.value.match(/^-?[0-9]+$/)) {
+            // Set the value in browser local storage.
+            await browser.storage.local.set({ elapsedDay: elapsedDay.value });
+        }
+    });
+
     // Set the input for contextMenu.
     let contextMenu = document.getElementById(
         'unixconverter-popup-contextmenu'
     );
     contextMenu.checked = settings.contextMenu;
-
-    // Set event listener to only allow numbers for the unix input.
-    fromUnix.addEventListener('input', () => {
-        fromUnix.value = fromUnix.value.replace(/[^0-9]/g, '');
-    });
 
     // Set event listener for unix timestamp convert button.
     let fromUnixButton = document.getElementById('convert-unix-timestamp');

@@ -134,8 +134,8 @@ async function handleEvent(ev) {
     document.body.appendChild(div);
 }
 
-(async () => {
-    await loadDefaultSettings();
+(() => {
+    loadDefaultSettings();
 
     // Add an event listener on mouseup to handle the CTRL click conversion.
     document.addEventListener('mouseup', handleEvent, false);

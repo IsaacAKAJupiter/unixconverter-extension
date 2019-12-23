@@ -24,10 +24,8 @@ async function getFormattedDate(text) {
     // Get the extension settings.
     let settings = await browser.storage.local.get();
 
-    // Replace all non digits/periods then replace all except the last period.
-    text = parseFloat(
-        text.replace(/[^0-9\.]+/g, '').replace(/(?<=.*[.])[.]/g, '')
-    );
+    // Parse the test into a float.
+    text = parseFloat(text);
 
     // Get the date based on the settings.
     let date;

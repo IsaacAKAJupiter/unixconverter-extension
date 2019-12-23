@@ -136,6 +136,13 @@ async function loadDefaultSettings() {
         await browser.storage.local.set({ contextMenu: false });
     }
 
+    // Check if ctrlConversion is set and if it is not, set to trye.
+    let ctrlConversion = await browser.storage.local.get('ctrlConversion');
+
+    if (!Object.keys(ctrlConversion).length) {
+        await browser.storage.local.set({ ctrlConversion: true });
+    }
+
     // Check if elapsedYear is set and if it is not, set to 1.
     let elapsedYear = await browser.storage.local.get('elapsedYear');
 

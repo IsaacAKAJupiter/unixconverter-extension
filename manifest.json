@@ -19,8 +19,8 @@
             "js": [
                 "dayjs.js",
                 "browser-polyfill.min.js",
-                "content.js",
-                "convert.js"
+                "convert.js",
+                "content.js"
             ],
             "css": ["main.css"],
             "all_frames": true

@@ -80,8 +80,18 @@ async function handleEvent(ev) {
         return;
     }
 
+    // Check if the CTRL Conversion is even enabled.
+    let ctrlConversion = await browser.storage.local.get('ctrlConversion');
+
     // If no CTRL key, no text, or no converted textContent/fetchedIn, return.
-    if (!ev.ctrlKey || !text || !textContent || !fetchedIn) return;
+    if (
+        !ev.ctrlKey ||
+        !text ||
+        !textContent ||
+        !fetchedIn ||
+        !ctrlConversion.ctrlConversion
+    )
+        return;
 
     // Create an element in the body.
     let div = document.createElement('div');
@@ -124,8 +134,8 @@ async function handleEvent(ev) {
     document.body.appendChild(div);
 }
 
-(() => {
-    loadDefaultSettings();
+(async () => {
+    await loadDefaultSettings();
 
     // Add an event listener on mouseup to handle the CTRL click conversion.
     document.addEventListener('mouseup', handleEvent, false);

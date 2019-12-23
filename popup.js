@@ -289,6 +289,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     );
     contextMenu.checked = settings.contextMenu;
 
+    // Set the input for ctrlConversion.
+    let ctrlConversion = document.getElementById(
+        'unixconverter-popup-ctrlconversion'
+    );
+    ctrlConversion.checked = settings.ctrlConversion;
+
     // Set event listener for unix timestamp convert button.
     let fromUnixButton = document.getElementById('convert-unix-timestamp');
     fromUnixButton.addEventListener('click', async () => {
@@ -363,6 +369,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     contextMenu.addEventListener('change', async () => {
         // Update the contextMenu browser storage setting.
         await browser.storage.local.set({ contextMenu: contextMenu.checked });
+    });
+
+    // Set the event listener for the ctrlConversion checkbox.
+    ctrlConversion.addEventListener('change', async () => {
+        // Update the ctrlConversion browser storage setting.
+        await browser.storage.local.set({
+            ctrlConversion: ctrlConversion.checked
+        });
     });
 
     // Set the loading to false (add dn to loading, remove dn from content).

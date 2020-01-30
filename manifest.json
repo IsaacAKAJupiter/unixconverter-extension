@@ -48,7 +48,7 @@
     "commands": {
         "cycle-fetch-format": {
             "suggested_key": {
-                "default": "Ctrl+Shift+Right"
+                "default": "Alt+Shift+0"
             },
             "description": "Cycles the fetch format setting."
         }
